@@ -1,0 +1,126 @@
+#All In One Game
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Click The Box Game</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#111;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.game{
+  text-align:center;
+  width:100%;
+  max-width:400px;
+}
+
+h1{
+  margin-bottom:10px;
+}
+
+.info{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+
+#box{
+  width:60px;
+  height:60px;
+  background:#ffcc00;
+  position:relative;
+  margin:20px auto;
+  display:none;
+  cursor:pointer;
+  border-radius:8px;
+}
+
+button{
+  padding:10px 20px;
+  border:none;
+  background:#ffcc00;
+  cursor:pointer;
+  font-size:16px;
+  border-radius:5px;
+}
+button:hover{
+  background:#ffd633;
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+  <h1>Click the Box 🎯</h1>
+
+  <div class="info">
+    <div>Score: <span id="score">0</span></div>
+    <div>Time: <span id="time">30</span>s</div>
+  </div>
+
+  <div id="box"></div>
+
+  <button id="startBtn">Start Game</button>
+</div>
+
+<script>
+let score = 0;
+let time = 30;
+let timer;
+const box = document.getElementById("box");
+const scoreEl = document.getElementById("score");
+const timeEl = document.getElementById("time");
+const startBtn = document.getElementById("startBtn");
+
+function randomPosition(){
+  const x = Math.random() * 250;
+  const y = Math.random() * 250;
+  box.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+box.addEventListener("click", () => {
+  score++;
+  scoreEl.textContent = score;
+  randomPosition();
+});
+
+startBtn.addEventListener("click", () => {
+  score = 0;
+  time = 30;
+  scoreEl.textContent = score;
+  timeEl.textContent = time;
+  box.style.display = "block";
+  startBtn.disabled = true;
+  randomPosition();
+
+  timer = setInterval(() => {
+    time--;
+    timeEl.textContent = time;
+
+    if(time === 0){
+      clearInterval(timer);
+      box.style.display = "none";
+      startBtn.disabled = false;
+      alert("Game Over! Your score: " + score);
+    }
+  }, 1000);
+});
+</script>
+
+</body>
+</html>
