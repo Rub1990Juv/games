@@ -1,0 +1,124 @@
+#Whock a Mole game
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Whack-a-Mole</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #eef2f3;
+  }
+
+  h1 {
+    margin-top: 20px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-gap: 15px;
+    justify-content: center;
+    margin: 30px auto;
+  }
+
+  .hole {
+    width: 100px;
+    height: 100px;
+    background: #6b4f2c;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .mole {
+    background: green;
+  }
+
+  .info {
+    font-size: 18px;
+    margin: 10px;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<h1>🐹 Whack-a-Mole</h1>
+<p>Click the green mole!</p>
+
+<button id="start">Start Game</button>
+
+<div class="info">⏱ Time: <span id="time">30</span>s</div>
+<div class="info">🎯 Score: <span id="score">0</span></div>
+
+<div class="grid">
+  <div class="hole"></div>
+  <div class="hole"></div>
+  <div class="hole"></div>
+  <div class="hole"></div>
+  <div class="hole"></div>
+  <div class="hole"></div>
+  <div class="hole"></div>
+  <div class="hole"></div>
+  <div class="hole"></div>
+</div>
+
+<script>
+  const holes = document.querySelectorAll('.hole');
+  const scoreEl = document.getElementById('score');
+  const timeEl = document.getElementById('time');
+  const startBtn = document.getElementById('start');
+
+  let score = 0;
+  let timeLeft = 30;
+  let gameInterval;
+  let moleInterval;
+
+  function randomHole() {
+    holes.forEach(h => h.classList.remove('mole'));
+    const index = Math.floor(Math.random() * holes.length);
+    holes[index].classList.add('mole');
+  }
+
+  holes.forEach(hole => {
+    hole.addEventListener('click', () => {
+      if (hole.classList.contains('mole')) {
+        score++;
+        scoreEl.textContent = score;
+        hole.classList.remove('mole');
+      }
+    });
+  });
+
+  startBtn.onclick = () => {
+    score = 0;
+    timeLeft = 30;
+    scoreEl.textContent = score;
+    timeEl.textContent = timeLeft;
+
+    moleInterval = setInterval(randomHole, 700);
+
+    gameInterval = setInterval(() => {
+      timeLeft--;
+      timeEl.textContent = timeLeft;
+
+      if (timeLeft === 0) {
+        clearInterval(gameInterval);
+        clearInterval(moleInterval);
+        holes.forEach(h => h.classList.remove('mole'));
+        alert("Game Over! Your score: " + score);
+      }
+    }, 1000);
+  };
+</script>
+
+</body>
+</html>
