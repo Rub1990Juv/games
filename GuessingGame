@@ -1,0 +1,84 @@
+#GuessingGame
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Guess the Number</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .game {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  input {
+    width: 100%;
+    padding: 6px;
+    margin: 10px 0;
+  }
+
+  button {
+    padding: 6px 15px;
+    cursor: pointer;
+  }
+
+  #message {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="game">
+  <h2>Guess the Number 🎯</h2>
+  <p>I'm thinking of a number between 1 and 100</p>
+
+  <input type="number" id="guess" placeholder="Enter number">
+  <button onclick="check()">Check</button>
+
+  <p id="message"></p>
+</div>
+
+<script>
+  let secret = Math.floor(Math.random() * 100) + 1;
+  let attempts = 0;
+
+  function check() {
+    let guess = Number(document.getElementById("guess").value);
+    let msg = document.getElementById("message");
+
+    if (!guess || guess < 1 || guess > 100) {
+      msg.textContent = "Enter a number from 1 to 100 ❗";
+      return;
+    }
+
+    attempts++;
+
+    if (guess === secret) {
+      msg.textContent = `Correct 🎉 Attempts: ${attempts}`;
+    } else if (guess > secret) {
+      msg.textContent = "Too high ⬇️";
+    } else {
+      msg.textContent = "Too low ⬆️";
+    }
+  }
+</script>
+
+</body>
+</html>
