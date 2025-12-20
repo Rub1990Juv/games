@@ -1,0 +1,78 @@
+#Rectangle
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Click the Box</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #222;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    margin: 10px;
+  }
+
+  #score {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  #game {
+    width: 400px;
+    height: 400px;
+    background: #111;
+    position: relative;
+    border: 2px solid #fff;
+  }
+
+  #box {
+    width: 40px;
+    height: 40px;
+    background: red;
+    position: absolute;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<h1>Click the Box</h1>
+<div id="score">Score: 0</div>
+
+<div id="game">
+  <div id="box"></div>
+</div>
+
+<script>
+  const box = document.getElementById("box");
+  const scoreText = document.getElementById("score");
+  const game = document.getElementById("game");
+
+  let score = 0;
+
+  function randomPosition() {
+    let x = Math.random() * (game.clientWidth - box.clientWidth);
+    let y = Math.random() * (game.clientHeight - box.clientHeight);
+
+    box.style.left = x + "px";
+    box.style.top = y + "px";
+  }
+
+  box.addEventListener("click", () => {
+    score++;
+    scoreText.textContent = "Score: " + score;
+    randomPosition();
+  });
+
+  randomPosition();
+</script>
+
+</body>
+</html>
