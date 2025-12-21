@@ -1,0 +1,80 @@
+#CatchTheBox
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Catch the Box</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #111;
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+
+  #game {
+    width: 400px;
+    height: 400px;
+    border: 3px solid white;
+    position: relative;
+    background: #222;
+  }
+
+  #box {
+    width: 40px;
+    height: 40px;
+    background: orange;
+    position: absolute;
+    cursor: pointer;
+  }
+
+  #score {
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div id="score">Score: 0</div>
+<div id="game">
+  <div id="box"></div>
+</div>
+
+<script>
+  const game = document.getElementById("game");
+  const box = document.getElementById("box");
+  const scoreText = document.getElementById("score");
+
+  let score = 0;
+  let speed = 1000;
+
+  function moveBox() {
+    const maxX = game.clientWidth - box.clientWidth;
+    const maxY = game.clientHeight - box.clientHeight;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    box.style.left = x + "px";
+    box.style.top = y + "px";
+  }
+
+  box.addEventListener("click", () => {
+    score++;
+    scoreText.textContent = "Score: " + score;
+
+    if (speed > 300) speed -= 50;
+    moveBox();
+  });
+
+  setInterval(moveBox, speed);
+</script>
+
+</body>
+</html>
