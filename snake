@@ -1,0 +1,60 @@
+#snake
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snake Game</title>
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+  }
+  canvas {
+    background: #222;
+    display: block;
+    margin-top: 20px;
+  }
+  h1 { color: #333; }
+</style>
+</head>
+<body>
+
+<h1>Snake Game</h1>
+<p>Use arrow keys to move the snake</p>
+<canvas id="gameCanvas" width="400" height="400"></canvas>
+<p>Score: <span id="score">0</span></p>
+
+<script>
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+const box = 20;
+let snake = [{x: 9*box, y: 10*box}];
+let direction = 'RIGHT';
+let food = {
+    x: Math.floor(Math.random()*20) * box,
+    y: Math.floor(Math.random()*20) * box
+};
+let score = 0;
+
+document.addEventListener('keydown', changeDirection);
+
+function changeDirection(e) {
+    if(e.key === 'ArrowLeft' && direction !== 'RIGHT') direction = 'LEFT';
+    if(e.key === 'ArrowUp' && direction !== 'DOWN') direction = 'UP';
+    if(e.key === 'ArrowRight' && direction !== 'LEFT') direction = 'RIGHT';
+    if(e.key === 'ArrowDown' && direction !== 'UP') direction = 'DOWN';
+}
+
+function draw() {
+    ctx.fillStyle = '#222';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    for(let i=0; i<snake.length; i++) {
+        ctx.fillStyle = i === 0 ?
