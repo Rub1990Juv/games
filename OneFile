@@ -1,0 +1,84 @@
+#OneFile
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Catch the Box</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1 {
+    margin-bottom: 5px;
+  }
+
+  #gameArea {
+    width: 400px;
+    height: 400px;
+    margin: 20px auto;
+    border: 2px solid #333;
+    background: #fff;
+    position: relative;
+  }
+
+  #box {
+    width: 40px;
+    height: 40px;
+    background: crimson;
+    position: absolute;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>🎯 Catch the Box</h1>
+<p>Score: <span id="score">0</span></p>
+
+<div id="gameArea">
+  <div id="box"></div>
+</div>
+
+<script>
+  const box = document.getElementById("box");
+  const gameArea = document.getElementById("gameArea");
+  const scoreEl = document.getElementById("score");
+
+  let score = 0;
+  let speed = 1000;
+  let timer;
+
+  function moveBox() {
+    const maxX = gameArea.clientWidth - box.clientWidth;
+    const maxY = gameArea.clientHeight - box.clientHeight;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    box.style.left = x + "px";
+    box.style.top = y + "px";
+  }
+
+  box.addEventListener("click", () => {
+    score++;
+    scoreEl.textContent = score;
+
+    if (speed > 300) speed -= 50;
+
+    clearInterval(timer);
+    timer = setInterval(moveBox, speed);
+  });
+
+  timer = setInterval(moveBox, speed);
+</script>
+
+</body>
+</html>
